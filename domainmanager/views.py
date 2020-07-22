@@ -231,10 +231,10 @@ def characterxps(request, character_id):
 def characterboons(request, character_id):
     character = get_object_or_404(Character, pk=character_id)
 
-    masterBoons = Boon.objects.filter(master=character).order_by('-timestamp')
-    slaveBoons = Boon.objects.filter(slave=character).order_by('-timestamp')
+    mainBoons = Boon.objects.filter(main=character).order_by('-timestamp')
+    subordinateBoons = Boon.objects.filter(subordinate=character).order_by('-timestamp')
 
-    context = {'character': character, 'masterBoons': masterBoons, 'slaveBoons': slaveBoons}
+    context = {'character': character, 'mainBoons': mainBoons, 'subordinateBoons': subordinateBoons}
     return render(request, 'domainmanager/characterboons.html', context)
 
 
@@ -248,18 +248,18 @@ def characterboon_create(request, character_id):
 
         if form.is_valid():
             boon = form.save(commit=False)
-            boon.master = character
+            boon.main = character
             boon.hash_gm = characterTools.random_string(20)
-            boon.hash_slave = characterTools.random_string(20)
-            boon.hash_master = characterTools.random_string(20)
+            boon.hash_subordinate = characterTools.random_string(20)
+            boon.hash_main = characterTools.random_string(20)
             boon.save()
 
             return redirect('domainmanager:characterboons', character_id)
 
     else:
-        data = {'master': character}
+        data = {'main': character}
         form = BoonForm(initial=data)
-        form.fields['slave'].queryset = Character.objects.exclude(pk=character.pk).order_by('lastname')
+        form.fields['subordinate'].queryset = Character.objects.exclude(pk=character.pk).order_by('lastname')
 
     context = {'character': character, 'form': form}
     return render(request, 'domainmanager/forms/characterboon_create.html', context)
@@ -270,13 +270,13 @@ def characterboon_validation(request, boon_id, hash, answer):
     boon = get_object_or_404(Boon, pk=boon_id)
     returnToPersonId = 0
 
-    if boon.hash_slave == hash:
-        boon.approvedbyslave = answer
-        returnToPersonId = boon.slave.pk
+    if boon.hash_subordinate == hash:
+        boon.approvedbysubordinate = answer
+        returnToPersonId = boon.subordinate.pk
 
-    if boon.hash_master == hash:
-        boon.approvedbymaster = answer
-        returnToPersonId = boon.master.pk
+    if boon.hash_main == hash:
+        boon.approvedbymain = answer
+        returnToPersonId = boon.main.pk
 
     boon.save()
 
@@ -576,13 +576,13 @@ def genealogy2(request):
 @staff_member_required
 def adminboons(request):
     # get only GM-WAITING & SLAVE-ACCEPTED boons - those the GM has to validate within his own dommain
-    currentBoons = Boon.objects.filter(~Q(approvedbyslave__exact=Boon.STATUS.declined), Q(approvedbygm__exact=Boon.STATUS.waiting)) \
-        .filter(slave__domain=adminTools.getDomainFromPerson(request.user.id)) \
+    currentBoons = Boon.objects.filter(~Q(approvedbysubordinate__exact=Boon.STATUS.declined), Q(approvedbygm__exact=Boon.STATUS.waiting)) \
+        .filter(subordinate__domain=adminTools.getDomainFromPerson(request.user.id)) \
         .order_by('-timestamp')
 
     # get the already validated boons for a log view
     oldBoons = Boon.objects.filter(Q(approvedbygm__exact=Boon.STATUS.accepted) | Q(approvedbygm__exact=Boon.STATUS.declined) | Q(
-        approvedbyslave__exact=Boon.STATUS.declined)).filter(slave__domain=adminTools.getDomainFromPerson(request.user.id)).order_by('-timestamp')
+        approvedbysubordinate__exact=Boon.STATUS.declined)).filter(subordinate__domain=adminTools.getDomainFromPerson(request.user.id)).order_by('-timestamp')
 
     context = {'currentBoons': currentBoons, 'oldBoons': oldBoons}
     return render(request, 'domainmanager/adminboons.html', context)

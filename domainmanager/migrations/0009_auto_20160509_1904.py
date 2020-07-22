@@ -36,12 +36,12 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='boon',
-            name='master',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='master', to='domainmanager.Person'),
+            name='main',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='main', to='domainmanager.Person'),
         ),
         migrations.AddField(
             model_name='boon',
-            name='slave',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='slave', to='domainmanager.Person'),
+            name='subordinate',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='subordinate', to='domainmanager.Person'),
         ),
     ]

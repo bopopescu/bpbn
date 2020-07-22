@@ -504,8 +504,8 @@ class Boon(models.Model):
     # could use it in future versions for a translations
     # STATUS = Choices(('draft', _('draft')), ('published', _('published')))
     STATUS = Choices((1, 'waiting', 'Waiting for approval'), (2, 'accepted', 'Accepted'), (3, 'declined', 'Declined'), (4, 'resolved', 'Resolved'))
-    master = models.ForeignKey(Character, related_name='master', blank=True, null=True)
-    slave = models.ForeignKey(Character, related_name='slave')
+    main = models.ForeignKey(Character, related_name='main', blank=True, null=True)
+    subordinate = models.ForeignKey(Character, related_name='subordinate')
     category = models.ForeignKey(BoonCategory, related_name='category')
     note = models.TextField(default="please fill out a short decription")
     created = models.DateTimeField(auto_now_add=True)
@@ -515,16 +515,16 @@ class Boon(models.Model):
     approvedbygm_note = models.TextField(default="Place for additional notes")
     hash_gm = models.CharField(max_length=20, default="")
     # SLAVE
-    approvedbyslave = models.IntegerField(choices=STATUS, default=STATUS.waiting)
-    approvedbyslave_note = models.TextField(default="Place for additional notes")
-    hash_slave = models.CharField(max_length=20, default="")
+    approvedbysubordinate = models.IntegerField(choices=STATUS, default=STATUS.waiting)
+    approvedbysubordinate_note = models.TextField(default="Place for additional notes")
+    hash_subordinate = models.CharField(max_length=20, default="")
     # MASTER
-    approvedbymaster = models.IntegerField(choices=STATUS, default=STATUS.waiting)
-    approvedbymaster_note = models.TextField(default="Place for additional notes")
-    hash_master = models.CharField(max_length=20, default="")
+    approvedbymain = models.IntegerField(choices=STATUS, default=STATUS.waiting)
+    approvedbymain_note = models.TextField(default="Place for additional notes")
+    hash_main = models.CharField(max_length=20, default="")
 
     def __str__(self):
-        return self.slave.firstname + " " + self.slave.lastname + " owes a " + self.category.name + " to " + self.master.firstname + " " + self.master.lastname
+        return self.subordinate.firstname + " " + self.subordinate.lastname + " owes a " + self.category.name + " to " + self.main.firstname + " " + self.main.lastname
 
 
 class Xpearned(models.Model):

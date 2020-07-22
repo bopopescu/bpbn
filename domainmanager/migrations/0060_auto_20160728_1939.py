@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
         migrations.RenameField(
             model_name='boon',
             old_name='note',
-            new_name='masternote',
+            new_name='mainnote',
         ),
         migrations.AddField(
             model_name='boon',
@@ -33,12 +33,12 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='boon',
-            name='approvedbyslave',
+            name='approvedbysubordinate',
             field=models.BooleanField(default=False),
         ),
         migrations.AddField(
             model_name='boon',
-            name='approvedbyslave_note',
+            name='approvedbysubordinate_note',
             field=models.TextField(default='Place for additional notes'),
         ),
         migrations.DeleteModel(

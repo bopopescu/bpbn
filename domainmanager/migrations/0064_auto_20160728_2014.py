@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RenameField(
             model_name='boon',
-            old_name='masternote',
+            old_name='mainnote',
             new_name='note',
         ),
     ]

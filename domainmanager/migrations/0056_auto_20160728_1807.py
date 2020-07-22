@@ -15,12 +15,12 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterField(
             model_name='boon',
-            name='master',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='master', to='domainmanager.Character'),
+            name='main',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='main', to='domainmanager.Character'),
         ),
         migrations.AlterField(
             model_name='boon',
-            name='slave',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='slave', to='domainmanager.Character'),
+            name='subordinate',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='subordinate', to='domainmanager.Character'),
         ),
     ]

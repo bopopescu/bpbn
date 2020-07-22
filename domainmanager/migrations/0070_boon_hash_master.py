@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='boon',
-            name='hash_master',
+            name='hash_main',
             field=models.CharField(default='', max_length=20),
         ),
     ]

@@ -19,12 +19,12 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name='boon',
-            name='approvedbymaster',
+            name='approvedbymain',
             field=models.IntegerField(choices=[(1, 'Waiting for approval'), (2, 'Accepted'), (3, 'Declined'), (4, 'Resolved')], default=1),
         ),
         migrations.AlterField(
             model_name='boon',
-            name='approvedbyslave',
+            name='approvedbysubordinate',
             field=models.IntegerField(choices=[(1, 'Waiting for approval'), (2, 'Accepted'), (3, 'Declined'), (4, 'Resolved')], default=1),
         ),
         migrations.AlterField(

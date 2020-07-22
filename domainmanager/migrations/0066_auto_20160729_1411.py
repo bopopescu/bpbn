@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name='boon',
-            name='approvedbyslave',
+            name='approvedbysubordinate',
             field=model_utils.fields.StatusField(choices=[(0, 'dummy')], default=1, max_length=100, no_check_for_status=True),
         ),
     ]

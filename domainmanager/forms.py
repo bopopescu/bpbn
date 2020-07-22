@@ -25,7 +25,7 @@ class CharacterFormEdit(forms.ModelForm):
 class BoonForm(ModelForm):
     class Meta:
         model = Boon
-        fields = ['slave', 'category', 'note']
+        fields = ['subordinate', 'category', 'note']
 
 
 class CharacterShoppingForm(ModelForm):

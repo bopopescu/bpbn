@@ -801,14 +801,14 @@ class SalutationAdmin(admin.ModelAdmin):
 
 
 class BoonAdmin(admin.ModelAdmin):
-    search_fields = ('master', 'slave', 'category')
+    search_fields = ('main', 'subordinate', 'category')
     actions_selection_counter = True
     date_hierarchy = 'created'
     empty_value_display = '-empty-'
-    list_display = ('get_master', 'get_slave', 'get_category', 'note')
+    list_display = ('get_main', 'get_subordinate', 'get_category', 'note')
     list_filter = (
-        ('master', admin.RelatedOnlyFieldListFilter), ('slave', admin.RelatedOnlyFieldListFilter), ('category', admin.RelatedOnlyFieldListFilter),
-        'approvedbygm', 'approvedbyslave', 'approvedbymaster')
+        ('main', admin.RelatedOnlyFieldListFilter), ('subordinate', admin.RelatedOnlyFieldListFilter), ('category', admin.RelatedOnlyFieldListFilter),
+        'approvedbygm', 'approvedbysubordinate', 'approvedbymain')
 
     # Show staff users only the properties they are allowed to edit
     def get_queryset(self, request):
@@ -824,23 +824,23 @@ class BoonAdmin(admin.ModelAdmin):
             pass
         else:
             # get only the domain - the user is a member of
-            form.base_fields['master'].queryset = form.base_fields['master'].queryset.filter(domain=request.user.person.domain)
+            form.base_fields['main'].queryset = form.base_fields['main'].queryset.filter(domain=request.user.person.domain)
             form.base_fields['category'].queryset = form.base_fields['category'].queryset.filter(domain=request.user.person.domain)
-            form.base_fields['slave'].queryset = form.base_fields['slave'].queryset.filter(domain=request.user.person.domain)
+            form.base_fields['subordinate'].queryset = form.base_fields['subordinate'].queryset.filter(domain=request.user.person.domain)
         return form
 
-    def get_master(self, obj):
-        if obj.master != None:
-            return obj.master.firstname + " " + obj.master.lastname
+    def get_main(self, obj):
+        if obj.main != None:
+            return obj.main.firstname + " " + obj.main.lastname
 
-    get_master.short_description = 'Master'
-    get_master.admin_order_field = 'master__lastname'
+    get_main.short_description = 'Main'
+    get_main.admin_order_field = 'main__lastname'
 
-    def get_slave(self, obj):
-        return obj.slave.firstname + " " + obj.slave.lastname
+    def get_subordinate(self, obj):
+        return obj.subordinate.firstname + " " + obj.subordinate.lastname
 
-    get_slave.short_description = 'Slave'
-    get_slave.admin_order_field = 'slave__lastname'
+    get_subordinate.short_description = 'Subordinate'
+    get_subordinate.admin_order_field = 'subordinate__lastname'
 
     def get_category(self, obj):
         return obj.category.name

@@ -12,7 +12,7 @@ import model_utils.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('domainmanager', '0070_boon_hash_master'),
+        ('domainmanager', '0070_boon_hash_main'),
     ]
 
     operations = [

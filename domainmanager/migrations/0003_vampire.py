@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100)),
-                ('sire', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='master', to='domainmanager.Vampire')),
+                ('sire', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='main', to='domainmanager.Vampire')),
             ],
         ),
     ]

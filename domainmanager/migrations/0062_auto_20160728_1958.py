@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='boon',
-            name='hash_slave',
+            name='hash_subordinate',
             field=models.CharField(default='', max_length=20),
         ),
     ]
